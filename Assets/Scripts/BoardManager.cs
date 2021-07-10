@@ -7,12 +7,12 @@ public class BoardManager : MonoBehaviour
 
     public class Count
     {
-        public int minmum;
+        public int minimum;
         public int maximum;
 
         public Count(int min, int max)
         {
-            minmum = min;
+            minimum = min;
             maximum = max;
         }
     }
@@ -40,9 +40,9 @@ public class BoardManager : MonoBehaviour
 
         InitialiseList();
 
-        LayoutObjectAtRandom(wall, Wallcount.minmum, Wallcount.maximum);
+        LayoutObjectAtRandom(wall, Wallcount.minimum, Wallcount.maximum);
 
-        LayoutObjectAtRandom(food, foodcount.minmum, foodcount.maximum);
+        LayoutObjectAtRandom(food, foodcount.minimum, foodcount.maximum);
 
         Instantiate(exit, new Vector3(columns - 1, rows - 1, 0), Quaternion.identity);
     }
@@ -62,7 +62,7 @@ public class BoardManager : MonoBehaviour
                     toInsutantiate = OuterWall;
                 }
 
-                GameObject instance = Instantiate(toInsutantiate, new Vector3(x, y, 0), Quaternion.identity);
+                GameObject instance = Instantiate(toInsutantiate, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
 
                 instance.transform.SetParent(boardHorder);
             }
@@ -108,6 +108,29 @@ public class BoardManager : MonoBehaviour
             Instantiate(tile, randomPosition, Quaternion.identity);
         }
     }
+    public void SetupScene(int level)
+    {
+        //外壁と床を作成します
+        BoardSetup();
+
+        //グリッド位置のリストをリセットします
+        InitialiseList();
+
+        //ランダム化された位置で、最小値と最大値に基づいてランダムな数の壁タイルをインスタンス化します。
+        LayoutObjectAtRandom(wall, Wallcount.minimum, Wallcount.maximum);
+
+        //ランダム化された位置で、最小値と最大値に基づいてランダムな数の食品タイルをインスタンス化します。
+        LayoutObjectAtRandom(food, foodcount.minimum, foodcount.maximum);
+
+        //対数進行に基づいて、現在のレベル数に基づいて敵の数を決定します
+        int enemyCount = (int)Mathf.Log(level, 2f);
+
+        //ランダム化された位置で、最小値と最大値に基づいてランダムな数の敵をインスタンス化します。
+        LayoutObjectAtRandom(enemy, enemyCount, enemyCount);
+
+        //ゲームボードの右上隅に出口タイルをインスタンス化します
+        Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
+    }
 }
-    // Update is called once per frame
+    
    

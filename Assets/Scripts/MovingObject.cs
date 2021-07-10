@@ -89,7 +89,7 @@ public abstract class MovingObject : MonoBehaviour
     }
 
 
-    //仮想キーワードは、オーバーライドキーワードを使用してクラスを継承することでAttemptMoveをオーバーライドできることを意味します。
+    //仮想キーワード(virtual)は、オーバーライドキーワードを使用してクラスを継承することでAttemptMoveをオーバーライドできることを意味します。
     //AttemptMoveは、ジェネリックパラメーターTを取り、ブロックされた場合(移動できない)にユニットが操作するコンポーネントのタイプを指定します。
     protected virtual void AttemptMove<T>(int xDir, int yDir)
         where T : Component
